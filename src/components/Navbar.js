@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/Navbar.css";
 import Contacts from "./Contacts";
 import Conversations from "./Conversations";
+import NewButton from "./NewButton";
 
 export default function Navbar() {
   const [selected, setSelected] = useState("conversations");
@@ -38,6 +39,7 @@ export default function Navbar() {
         </nav>
       </div>
       {selected === "conversations" ? <Conversations /> : <Contacts />}
+      <NewButton selected={selected} />
     </>
   );
 }
