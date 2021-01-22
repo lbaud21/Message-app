@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles/App.css";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import { useState } from "react";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
+  const [rememberMe, setRememberMe] = useState(() => {
+    const storedValue = JSON.parse(
+      localStorage.getItem("message-app-username")
+    );
+    return storedValue ? true : false;
+  });
+  const [username, setUsername] = useLocalStorage("username", "", rememberMe);
+  const [sendForm, setSendForm] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {sendForm ? (
+        <Dashboard />
+      ) : (
+        <Login
+          changeUsername={setUsername}
+          username={username}
+          changeRememberMe={setRememberMe}
+          rememberMe={rememberMe}
+          changeSentForm={setSendForm}
+        />
+      )}
+    </>
   );
 }
 
