@@ -1,6 +1,8 @@
 import React from "react";
 import useModal from "../hooks/useModal";
 import Modal from "./Modal";
+import ContactsModalContent from "./ContactsModalContent";
+import NewConversationModalContent from "./NewConversationModalContent";
 
 export default function NewButton({ selected }) {
   const [open, openModal, closeModal] = useModal();
@@ -12,8 +14,12 @@ export default function NewButton({ selected }) {
       </button>
 
       {open ? (
-        <Modal closeModal={closeModal}>
-          {selected === "conversations" ? <p>Conversation</p> : <p>Contacts</p>}
+        <Modal>
+          {selected === "conversations" ? (
+            <NewConversationModalContent closeModal={closeModal} />
+          ) : (
+            <ContactsModalContent closeModal={closeModal} />
+          )}
         </Modal>
       ) : null}
     </div>

@@ -3,6 +3,8 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import { useState } from "react";
 import useLocalStorage from "./hooks/useLocalStorage";
+import { ContactsProvider } from "./contexts/ContactsProvider";
+import { ConversationsProvider } from "./contexts/ConversationsProvider";
 
 function App() {
   const [rememberMe, setRememberMe] = useState(() => {
@@ -14,10 +16,18 @@ function App() {
   const [username, setUsername] = useLocalStorage("username", "", rememberMe);
   const [sendForm, setSendForm] = useState(false);
 
-  return (
-    <>
-      {sendForm ? (
+  const dashboard = (
+    <ContactsProvider>
+      <ConversationsProvider>
         <Dashboard />
+      </ConversationsProvider>
+    </ContactsProvider>
+  );
+
+  return (
+    <div className="app-wrapper">
+      {sendForm ? (
+        dashboard
       ) : (
         <Login
           changeUsername={setUsername}
@@ -27,7 +37,7 @@ function App() {
           changeSentForm={setSendForm}
         />
       )}
-    </>
+    </div>
   );
 }
 

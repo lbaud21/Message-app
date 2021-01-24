@@ -8,13 +8,17 @@ export default function Navbar() {
   const [selected, setSelected] = useState("conversations");
 
   const handleClick = (event) => {
+    event.preventDefault();
     setSelected(event.target.name);
     event.target.style.backgroundColor = "red";
   };
 
   return (
     <>
-      <div className="nav-container">
+      <div
+        className="nav-container"
+        style={{ height: "100%", width: "50%", margin: "0" }}
+      >
         <nav>
           <button
             name="conversations"
@@ -37,9 +41,10 @@ export default function Navbar() {
             Contacts
           </button>
         </nav>
+
+        {selected === "conversations" ? <Conversations /> : <Contacts />}
+        <NewButton selected={selected} />
       </div>
-      {selected === "conversations" ? <Conversations /> : <Contacts />}
-      <NewButton selected={selected} />
     </>
   );
 }

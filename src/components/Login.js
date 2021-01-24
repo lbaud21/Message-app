@@ -19,7 +19,12 @@ export default function Login({
         alignItems: "center",
       }}
     >
-      <form onSubmit={() => changeSentForm(true)}>
+      <form
+        onSubmit={(e) => {
+          changeSentForm(true);
+          e.preventDefault();
+        }}
+      >
         <label>
           Username
           <input

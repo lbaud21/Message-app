@@ -1,7 +1,7 @@
 import React from "react";
 import Portal from "./Portal";
 
-export default function Modal({ children, closeModal }) {
+export default function Modal({ children }) {
   return (
     <Portal>
       <div>
@@ -32,8 +32,6 @@ export default function Modal({ children, closeModal }) {
             }}
           >
             {children}
-            <hr />
-            <button onClick={closeModal}>Close</button>
           </div>
         </div>
         <div
