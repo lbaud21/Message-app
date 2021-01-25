@@ -19,7 +19,7 @@ function App() {
   const dashboard = (
     <ContactsProvider>
       <ConversationsProvider>
-        <Dashboard />
+        <Dashboard username={username} />
       </ConversationsProvider>
     </ContactsProvider>
   );

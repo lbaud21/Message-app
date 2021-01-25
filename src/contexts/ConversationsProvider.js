@@ -22,6 +22,21 @@ export function ConversationsProvider({ children }) {
     ]);
   }
 
+  const addMessage = (index, text, username) => {
+    const newMessage = { username, text };
+    setConversations((prevConversations) => {
+      const newConversations = prevConversations.map((conversation, i) => {
+        return index === i
+          ? {
+              ...conversation,
+              messages: [...conversation.messages, newMessage],
+            }
+          : { ...conversation };
+      });
+      return newConversations;
+    });
+  };
+
   return (
     <ConversationsContext.Provider
       value={{
@@ -29,6 +44,7 @@ export function ConversationsProvider({ children }) {
         createConversation,
         selectedConversationIndex,
         setSelectedConversationIndex,
+        addMessage,
       }}
     >
       {children}

@@ -3,16 +3,19 @@ import { useConversations } from "../contexts/ConversationsProvider";
 
 export default function Conversations() {
   const { conversations } = useConversations();
-  const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
+  const {
+    selectedConversationIndex,
+    setSelectedConversationIndex,
+  } = useConversations();
 
   const handleClick = (index) => {
     setSelectedConversationIndex(index);
   };
-
+  console.log(conversations);
   return (
     <>
       <ul style={{ padding: 0 }}>
-        {conversations.map((conversations, index) => (
+        {conversations.map((conversation, index) => (
           <li
             key={`conversation ${index}`}
             onClick={() => handleClick(index)}
@@ -32,7 +35,7 @@ export default function Conversations() {
                   }
             }
           >
-            <p>{conversations.recipients.join(", ")}</p>
+            <p>{conversation.recipients.join(", ")}</p>
           </li>
         ))}
       </ul>

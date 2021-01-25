@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import { useConversations } from "../contexts/ConversationsProvider";
 import OpenConversation from "./OpenConversation";
 
-export default function Dashboard() {
+export default function Dashboard({ username }) {
   const { selectedConversationIndex } = useConversations();
 
   return (
@@ -18,7 +18,12 @@ export default function Dashboard() {
       }}
     >
       <Navbar />
-      {selectedConversationIndex !== null ? <OpenConversation /> : null}
+      {selectedConversationIndex !== null ? (
+        <OpenConversation
+          selectedConversationIndex={selectedConversationIndex}
+          username={username}
+        />
+      ) : null}
     </div>
   );
 }
