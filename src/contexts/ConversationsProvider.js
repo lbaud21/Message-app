@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const ConversationsContext = React.createContext();
@@ -23,7 +23,7 @@ export function ConversationsProvider({ children }) {
   }
 
   const addMessage = (index, text, username) => {
-    const newMessage = { username, text };
+    const newMessage = { sender: username, text };
     setConversations((prevConversations) => {
       const newConversations = prevConversations.map((conversation, i) => {
         return index === i

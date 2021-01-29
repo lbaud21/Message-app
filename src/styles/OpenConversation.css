@@ -1,0 +1,30 @@
+.conversation-container {
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+}
+
+.conversation-container .messages-container {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: auto;
+}
+
+.conversation-container .single-message-container {
+  max-width: 80%;
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 0.5em;
+}
+
+.conversation-container .message-sender {
+  font-size: x-small;
+}
+
+.conversation-container form {
+  display: flex;
+  flex-flow: row nowrap;
+}

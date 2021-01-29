@@ -11,7 +11,7 @@ export default function Conversations() {
   const handleClick = (index) => {
     setSelectedConversationIndex(index);
   };
-  console.log(conversations);
+
   return (
     <>
       <ul style={{ padding: 0 }}>
