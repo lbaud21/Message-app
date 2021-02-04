@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
 
-export default function Conversations() {
+export default function Conversations({ username }) {
   const { conversations } = useConversations();
   const {
     selectedConversationIndex,
@@ -35,7 +35,11 @@ export default function Conversations() {
                   }
             }
           >
-            <p>{conversation.recipients.join(", ")}</p>
+            <p>
+              {conversation.recipients
+                .filter((recipient) => recipient !== username)
+                .join(", ")}
+            </p>
           </li>
         ))}
       </ul>

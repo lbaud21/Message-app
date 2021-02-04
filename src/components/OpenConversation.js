@@ -4,7 +4,7 @@ import "../styles/OpenConversation.css";
 
 export default function OpenConversation({ username }) {
   const [text, setText] = useState("");
-  const { addMessage } = useConversations();
+  const { sendMessage } = useConversations();
   const { selectedConversationIndex } = useConversations();
   const { conversations } = useConversations();
 
@@ -16,7 +16,7 @@ export default function OpenConversation({ username }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addMessage(selectedConversationIndex, text, username);
+    sendMessage(selectedConversationIndex, text, username);
     setText("");
   };
 
@@ -26,31 +26,37 @@ export default function OpenConversation({ username }) {
 
   return (
     <div className="conversation-container">
-      <div className="messages-container">
-        {conversations[selectedConversationIndex].messages.map(
-          (message, index) => {
-            const lastMessage =
-              conversations[selectedConversationIndex].messages.length - 1 ===
-              index;
-            return (
-              <div
-                ref={lastMessage ? lastMessageRef : null}
-                className="single-message-container"
-                style={
-                  message.sender === username
-                    ? { alignSelf: "flex-end", backgroundColor: "lightblue" }
-                    : { alignSelf: "flex-start", backgroundColor: "lightgreen" }
-                }
-              >
-                <div className="message-text">{message.text}</div>
-                <div className="message-sender">
-                  {message.sender === username ? "you" : message.sender}
+      {conversations[selectedConversationIndex] ? (
+        <div className="messages-container">
+          {conversations[selectedConversationIndex].messages.map(
+            (message, index) => {
+              const lastMessage =
+                conversations[selectedConversationIndex].messages.length - 1 ===
+                index;
+              return (
+                <div
+                  key={`message-${index}`}
+                  ref={lastMessage ? lastMessageRef : null}
+                  className="single-message-container"
+                  style={
+                    message.sender === username
+                      ? { alignSelf: "flex-end", backgroundColor: "lightblue" }
+                      : {
+                          alignSelf: "flex-start",
+                          backgroundColor: "lightgreen",
+                        }
+                  }
+                >
+                  <div className="message-text">{message.text}</div>
+                  <div className="message-sender">
+                    {message.sender === username ? "you" : message.sender}
+                  </div>
                 </div>
-              </div>
-            );
-          }
-        )}
-      </div>
+              );
+            }
+          )}
+        </div>
+      ) : null}
 
       <form>
         <textarea

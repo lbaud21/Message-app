@@ -4,7 +4,7 @@ import Modal from "./Modal";
 import ContactsModalContent from "./ContactsModalContent";
 import NewConversationModalContent from "./NewConversationModalContent";
 
-export default function NewButton({ selected }) {
+export default function NewButton({ selected, username }) {
   const [open, openModal, closeModal] = useModal();
 
   return (
@@ -16,7 +16,10 @@ export default function NewButton({ selected }) {
       {open ? (
         <Modal>
           {selected === "conversations" ? (
-            <NewConversationModalContent closeModal={closeModal} />
+            <NewConversationModalContent
+              closeModal={closeModal}
+              username={username}
+            />
           ) : (
             <ContactsModalContent closeModal={closeModal} />
           )}

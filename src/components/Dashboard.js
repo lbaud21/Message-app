@@ -17,12 +17,9 @@ export default function Dashboard({ username }) {
         flexFlow: "row no-wrap",
       }}
     >
-      <Navbar />
+      <Navbar username={username} />
       {selectedConversationIndex !== null ? (
-        <OpenConversation
-          selectedConversationIndex={selectedConversationIndex}
-          username={username}
-        />
+        <OpenConversation username={username} />
       ) : null}
     </div>
   );

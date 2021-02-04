@@ -24,6 +24,10 @@
   font-size: x-small;
 }
 
+.conversation-container .message-text {
+  word-wrap: break-word;
+}
+
 .conversation-container form {
   display: flex;
   flex-flow: row nowrap;

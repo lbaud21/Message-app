@@ -5,6 +5,7 @@ import { useState } from "react";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { ContactsProvider } from "./contexts/ContactsProvider";
 import { ConversationsProvider } from "./contexts/ConversationsProvider";
+import { SocketProvider } from "./contexts/SocketProvider";
 
 function App() {
   const [rememberMe, setRememberMe] = useState(() => {
@@ -17,11 +18,13 @@ function App() {
   const [sendForm, setSendForm] = useState(false);
 
   const dashboard = (
-    <ContactsProvider>
-      <ConversationsProvider>
-        <Dashboard username={username} />
-      </ConversationsProvider>
-    </ContactsProvider>
+    <SocketProvider username={username}>
+      <ContactsProvider>
+        <ConversationsProvider>
+          <Dashboard username={username} />
+        </ConversationsProvider>
+      </ContactsProvider>
+    </SocketProvider>
   );
 
   return (

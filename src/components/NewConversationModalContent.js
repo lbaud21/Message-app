@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useContacts } from "../contexts/ContactsProvider";
 import { useConversations } from "../contexts/ConversationsProvider";
 
-export default function NewConversationModalContent({ closeModal }) {
+export default function NewConversationModalContent({ closeModal, username }) {
   const { contacts } = useContacts();
   const [selectedContacts, setSelectedContacts] = useState([]);
   const { createConversation } = useConversations();
@@ -22,7 +22,11 @@ export default function NewConversationModalContent({ closeModal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createConversation(selectedContacts);
+    if (selectedContacts) {
+      selectedContacts.push(username);
+      createConversation(selectedContacts);
+    }
+
     closeModal();
   };
 

@@ -4,7 +4,7 @@ import Contacts from "./Contacts";
 import Conversations from "./Conversations";
 import NewButton from "./NewButton";
 
-export default function Navbar() {
+export default function Navbar({ username }) {
   const [selected, setSelected] = useState("conversations");
 
   const handleClick = (event) => {
@@ -42,8 +42,12 @@ export default function Navbar() {
           </button>
         </nav>
 
-        {selected === "conversations" ? <Conversations /> : <Contacts />}
-        <NewButton selected={selected} />
+        {selected === "conversations" ? (
+          <Conversations username={username} />
+        ) : (
+          <Contacts />
+        )}
+        <NewButton selected={selected} username={username} />
       </div>
     </>
   );
