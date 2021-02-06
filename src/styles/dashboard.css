@@ -1,7 +1,7 @@
 .dashboard-wrapper {
   max-width: 500px;
   max-height: 950px;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   margin: 0;
 }
