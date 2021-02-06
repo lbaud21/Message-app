@@ -1,5 +1,8 @@
 import React from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
+import Modal from "./Modal";
+import useModal from "../hooks/useModal";
+import OpenConversation from "./OpenConversation";
 
 export default function Conversations({ username }) {
   const { conversations } = useConversations();
@@ -7,35 +10,23 @@ export default function Conversations({ username }) {
     selectedConversationIndex,
     setSelectedConversationIndex,
   } = useConversations();
+  const [open, openModal, closeModal] = useModal();
 
   const handleClick = (index) => {
     setSelectedConversationIndex(index);
+    openModal();
   };
 
   return (
-    <>
+    <div className="navbar-main-content">
       <ul style={{ padding: 0 }}>
         {conversations.map((conversation, index) => (
           <li
+            className="conversations-list nav-main-content-list"
             key={`conversation ${index}`}
             onClick={() => handleClick(index)}
-            style={
-              selectedConversationIndex === index
-                ? {
-                    border: "black solid 1px",
-                    listStyleType: "none",
-                    backgroundColor: "red",
-                    textAlign: "center",
-                  }
-                : {
-                    border: "black solid 1px",
-                    listStyleType: "none",
-                    backgroundColor: "white",
-                    textAlign: "center",
-                  }
-            }
           >
-            <p>
+            <p className="nav-main-content-list-text">
               {conversation.recipients
                 .filter((recipient) => recipient !== username)
                 .join(", ")}
@@ -43,6 +34,15 @@ export default function Conversations({ username }) {
           </li>
         ))}
       </ul>
-    </>
+      {open ? (
+        <Modal>
+          <OpenConversation
+            username={username}
+            selectedConversationIndex={selectedConversationIndex}
+            closeModal={closeModal}
+          />
+        </Modal>
+      ) : null}
+    </div>
   );
 }

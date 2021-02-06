@@ -10,45 +10,45 @@ export default function Navbar({ username }) {
   const handleClick = (event) => {
     event.preventDefault();
     setSelected(event.target.name);
-    event.target.style.backgroundColor = "red";
   };
 
   return (
-    <>
-      <div
-        className="nav-container"
-        style={{ height: "100%", width: "50%", margin: "0" }}
-      >
-        <nav>
-          <button
-            name="conversations"
-            className="conversations-button"
-            onClick={handleClick}
-            style={{
-              backgroundColor: selected === "conversations" ? "red" : "white",
-            }}
-          >
-            Conversations
-          </button>
-          <button
-            name="contacts"
-            className="contacts-button"
-            onClick={handleClick}
-            style={{
-              backgroundColor: selected === "contacts" ? "red" : "white",
-            }}
-          >
-            Contacts
-          </button>
-        </nav>
-
-        {selected === "conversations" ? (
-          <Conversations username={username} />
-        ) : (
-          <Contacts />
-        )}
+    <div className="nav-container">
+      <div className="new-button">
         <NewButton selected={selected} username={username} />
       </div>
-    </>
+
+      {selected === "conversations" ? (
+        <Conversations username={username} />
+      ) : (
+        <Contacts />
+      )}
+
+      <nav className="nav-buttons-container">
+        <button
+          name="conversations"
+          className="conversations-button nav-button"
+          onClick={handleClick}
+        >
+          <img
+            className="icon-image"
+            src={`${process.env.PUBLIC_URL}/images/chat-icon-black.png`}
+            alt="Chat icon"
+          />
+        </button>
+
+        <button
+          name="contacts"
+          className="contacts-button nav-button"
+          onClick={handleClick}
+        >
+          <img
+            className="icon-image"
+            src={`${process.env.PUBLIC_URL}/images/contacts-icon-black.png`}
+            alt="Contacts icon"
+          />
+        </button>
+      </nav>
+    </div>
   );
 }

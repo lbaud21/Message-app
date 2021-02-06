@@ -8,8 +8,8 @@ export default function NewButton({ selected, username }) {
   const [open, openModal, closeModal] = useModal();
 
   return (
-    <div>
-      <button onClick={openModal} style={{ position: "absolute", bottom: "0" }}>
+    <>
+      <button onClick={openModal}>
         New {selected === "conversations" ? "conversation" : "contact"}
       </button>
 
@@ -25,6 +25,6 @@ export default function NewButton({ selected, username }) {
           )}
         </Modal>
       ) : null}
-    </div>
+    </>
   );
 }

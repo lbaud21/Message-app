@@ -2,10 +2,13 @@ import React, { useState, useCallback } from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
 import "../styles/OpenConversation.css";
 
-export default function OpenConversation({ username }) {
+export default function OpenConversation({
+  username,
+  selectedConversationIndex,
+  closeModal,
+}) {
   const [text, setText] = useState("");
   const { sendMessage } = useConversations();
-  const { selectedConversationIndex } = useConversations();
   const { conversations } = useConversations();
 
   const lastMessageRef = useCallback((node) => {
@@ -26,6 +29,9 @@ export default function OpenConversation({ username }) {
 
   return (
     <div className="conversation-container">
+      <button type="button" onClick={closeModal}>
+        close
+      </button>
       {conversations[selectedConversationIndex] ? (
         <div className="messages-container">
           {conversations[selectedConversationIndex].messages.map(
