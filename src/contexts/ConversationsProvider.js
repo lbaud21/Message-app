@@ -17,16 +17,8 @@ export function ConversationsProvider({ children }) {
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
   const socket = useSocket();
 
-  function createConversation(recipients) {
-    const conversationId = createConversationId(recipients, conversations);
-    setConversations((prevConversations) => [
-      ...prevConversations,
-      { conversationId, recipients, messages: [] },
-    ]);
-  }
-
-  function createConversationId(recipients, conversations) {
-    const conversationId = recipients.sort().join("-");
+  const createConversationId = useCallback((recipients, conversations) => {
+    let conversationId = recipients.sort().join("-");
     const numberOfConversationsWithSameId = conversations.filter(
       (conversation) =>
         conversation.recipients.sort().join("-") === conversationId
@@ -34,14 +26,34 @@ export function ConversationsProvider({ children }) {
     if (numberOfConversationsWithSameId === 0) {
       return conversationId;
     } else {
-      conversationId.push(`-${numberOfConversationsWithSameId}`);
+      conversationId += `-${numberOfConversationsWithSameId}`;
       return conversationId;
     }
-  }
+  }, []);
+
+  const createConversation = useCallback(
+    (recipients) => {
+      const conversationId = createConversationId(recipients, conversations);
+      setConversations((prevConversations) => [
+        ...prevConversations,
+        { conversationId, recipients, messages: [] },
+      ]);
+    },
+    [conversations, createConversationId, setConversations]
+  );
 
   const addMessage = useCallback(
-    (conversationId, text, username) => {
+    (conversationId, text, username, recipients) => {
       const newMessage = { sender: username, text };
+
+      if (
+        conversations.some(
+          (conversation) => conversation.conversationId === conversationId
+        ) === false
+      ) {
+        createConversation(recipients);
+      }
+
       setConversations((prevConversations) => {
         const newConversations = prevConversations.map((conversation) => {
           return conversationId === conversation.conversationId
@@ -54,7 +66,7 @@ export function ConversationsProvider({ children }) {
         return newConversations;
       });
     },
-    [setConversations]
+    [setConversations, createConversation, conversations]
   );
 
   const sendMessage = (index, text, username) => {
@@ -62,14 +74,17 @@ export function ConversationsProvider({ children }) {
     const recipients = conversation.recipients;
     const conversationId = conversation.conversationId;
     socket.emit("send-message", { conversationId, text, recipients });
-    addMessage(conversationId, text, username);
+    addMessage(conversationId, text, username, recipients);
   };
 
   useEffect(() => {
     if (socket === null) return;
-    socket.on("receive-message", ({ conversationId, text, username }) => {
-      addMessage(conversationId, text, username);
-    });
+    socket.on(
+      "receive-message",
+      ({ conversationId, text, username, recipients }) => {
+        addMessage(conversationId, text, username, recipients);
+      }
+    );
     return () => socket.off("receive-message");
   }, [socket, addMessage]);
 

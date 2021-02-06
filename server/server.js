@@ -7,13 +7,15 @@ io.on("connection", (socket) => {
   socket.join(username);
   console.log(`${username} is connected`);
   socket.on("send-message", ({ conversationId, text, recipients }) => {
-    recipients.forEach((recipient) => {
-      console.log(`recipient: ${recipient}`);
-      console.log(`text: ${JSON.stringify(text)}`);
+    const newRecipients = recipients.filter(
+      (recipient) => recipient !== username
+    );
+    newRecipients.forEach((recipient) => {
       socket.broadcast.to(recipient).emit("receive-message", {
         conversationId,
         text,
         username,
+        recipients,
       });
     });
   });
