@@ -2,7 +2,7 @@ import React from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
 import Modal from "./Modal";
 import useModal from "../hooks/useModal";
-import OpenConversation from "./OpenConversation";
+import OpenConversationModalContent from "./OpenConversationModalContent";
 
 export default function Conversations({ username }) {
   const { conversations } = useConversations();
@@ -35,8 +35,8 @@ export default function Conversations({ username }) {
         ))}
       </ul>
       {open ? (
-        <Modal>
-          <OpenConversation
+        <Modal modalType="openConversation">
+          <OpenConversationModalContent
             username={username}
             selectedConversationIndex={selectedConversationIndex}
             closeModal={closeModal}

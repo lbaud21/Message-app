@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
-import "../styles/OpenConversation.css";
+import "../styles/OpenConversationModalContent.css";
 
 export default function OpenConversation({
   username,
@@ -29,8 +29,16 @@ export default function OpenConversation({
 
   return (
     <div className="conversation-container">
-      <button type="button" onClick={closeModal}>
-        close
+      <button
+        className="return-button-container"
+        type="button"
+        onClick={closeModal}
+      >
+        <img
+          className="return-button"
+          src={`${process.env.PUBLIC_URL}/images/return-icon.png`}
+          alt="return icon"
+        />
       </button>
       {conversations[selectedConversationIndex] ? (
         <div className="messages-container">
@@ -65,11 +73,7 @@ export default function OpenConversation({
       ) : null}
 
       <form>
-        <textarea
-          value={text}
-          onChange={handleChange}
-          style={{ height: "100%", margin: "0" }}
-        ></textarea>
+        <textarea value={text} onChange={handleChange}></textarea>
         <button onClick={handleSubmit}>Send</button>
       </form>
     </div>

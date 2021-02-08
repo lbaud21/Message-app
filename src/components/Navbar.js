@@ -28,7 +28,7 @@ export default function Navbar({ username }) {
         <button
           name="conversations"
           className="conversations-button nav-button"
-          onClick={handleClick}
+          onClick={(e) => handleClick(e)}
         >
           <img
             className="icon-image"
@@ -40,7 +40,7 @@ export default function Navbar({ username }) {
         <button
           name="contacts"
           className="contacts-button nav-button"
-          onClick={handleClick}
+          onClick={(e) => handleClick(e)}
         >
           <img
             className="icon-image"

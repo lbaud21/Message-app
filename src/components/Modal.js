@@ -1,7 +1,7 @@
 import React from "react";
 import Portal from "./Portal";
 
-export default function Modal({ children }) {
+export default function Modal({ children, modalType }) {
   return (
     <Portal>
       <div>
@@ -18,18 +18,27 @@ export default function Modal({ children }) {
           }}
         >
           <div
-            style={{
-              position: "relative",
-              background: "white",
-              borderRadius: "2px",
-              padding: "15px",
-              minWidth: "320px",
-              maxWidth: "600px",
-              maxHeight: "600px",
-              zIndex: 10,
-              boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.3)",
-              marginBottom: "100px",
-            }}
+            style={
+              modalType === "openConversation"
+                ? {
+                    background: "white",
+                    height: "100%",
+                    width: "100%",
+                    zIndex: 10,
+                  }
+                : {
+                    position: "relative",
+                    background: "white",
+                    borderRadius: "2px",
+                    padding: "15px",
+                    minWidth: "320px",
+                    maxWidth: "600px",
+                    maxHeight: "600px",
+                    zIndex: 10,
+                    boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.3)",
+                    marginBottom: "100px",
+                  }
+            }
           >
             {children}
           </div>
