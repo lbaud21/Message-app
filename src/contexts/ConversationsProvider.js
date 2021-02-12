@@ -29,10 +29,15 @@ export function ConversationsProvider({ children }) {
 
   const createConversationId = useCallback((recipients, conversations) => {
     let conversationId = recipients.sort().join("-");
-    const numberOfConversationsWithSameId = conversations.filter(
-      (conversation) =>
-        conversation.recipients.sort().join("-") === conversationId
-    ).length;
+    let numberOfConversationsWithSameId = null;
+
+    if (conversations) {
+      numberOfConversationsWithSameId = conversations.filter(
+        (conversation) =>
+          conversation.recipients.sort().join("-") === conversationId
+      ).length;
+    }
+
     if (numberOfConversationsWithSameId === 0) {
       return conversationId;
     } else {
