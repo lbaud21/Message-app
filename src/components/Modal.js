@@ -1,21 +1,43 @@
 import React from "react";
 import Portal from "./Portal";
 
-export default function Modal({ children, modalType }) {
+const Modal = ({ children, modalType }) => {
   return (
     <Portal>
-      <div>
+      <div
+        className="modal-content-wrapper"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          position: "absolute",
+          top: "0",
+          width: "100%",
+        }}
+      >
         <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-          }}
+          style={
+            modalType === "openConversation"
+              ? {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  maxWidth: "500px",
+                  maxHeight: "950px",
+                  height: "100vh",
+                  width: "100vw",
+                }
+              : {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }
+          }
         >
           <div
             style={
@@ -57,4 +79,11 @@ export default function Modal({ children, modalType }) {
       </div>
     </Portal>
   );
-}
+};
+
+const MemoizedModal = React.memo(
+  Modal,
+  (prevProps, nextProps) => prevProps.modalType === nextProps.modalType
+);
+
+export default MemoizedModal;

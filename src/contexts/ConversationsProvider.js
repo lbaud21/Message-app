@@ -15,6 +15,16 @@ export function ConversationsProvider({ children }) {
     true
   );
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
+  const [conversationsNamesList, setConversationsNamesList] = useState(() =>
+    conversations.map((conversation) => conversation.recipients)
+  );
+
+  useEffect(() => {
+    setConversationsNamesList(
+      conversations.map((conversation) => conversation.recipients)
+    );
+  }, [conversations]);
+
   const socket = useSocket();
 
   const createConversationId = useCallback((recipients, conversations) => {
@@ -32,18 +42,18 @@ export function ConversationsProvider({ children }) {
   }, []);
 
   const createConversation = useCallback(
-    (recipients) => {
+    (recipients, conversations) => {
       const conversationId = createConversationId(recipients, conversations);
       setConversations((prevConversations) => [
         ...prevConversations,
         { conversationId, recipients, messages: [] },
       ]);
     },
-    [conversations, createConversationId, setConversations]
+    [createConversationId, setConversations]
   );
 
   const addMessage = useCallback(
-    (conversationId, text, username, recipients) => {
+    (conversationId, text, username, recipients, conversations) => {
       const newMessage = { sender: username, text };
 
       if (
@@ -51,7 +61,7 @@ export function ConversationsProvider({ children }) {
           (conversation) => conversation.conversationId === conversationId
         ) === false
       ) {
-        createConversation(recipients);
+        createConversation(recipients, conversations);
       }
 
       setConversations((prevConversations) => {
@@ -66,32 +76,36 @@ export function ConversationsProvider({ children }) {
         return newConversations;
       });
     },
-    [setConversations, createConversation, conversations]
+    [setConversations, createConversation]
   );
 
-  const sendMessage = (index, text, username) => {
-    const conversation = conversations[index];
-    const recipients = conversation.recipients;
-    const conversationId = conversation.conversationId;
-    socket.emit("send-message", { conversationId, text, recipients });
-    addMessage(conversationId, text, username, recipients);
-  };
+  const sendMessage = useCallback(
+    (index, text, username) => {
+      const conversation = conversations[index];
+      const recipients = conversation.recipients;
+      const conversationId = conversation.conversationId;
+      socket.emit("send-message", { conversationId, text, recipients });
+      addMessage(conversationId, text, username, recipients, conversations);
+    },
+    [addMessage, socket, conversations]
+  );
 
   useEffect(() => {
     if (socket === null) return;
     socket.on(
       "receive-message",
       ({ conversationId, text, username, recipients }) => {
-        addMessage(conversationId, text, username, recipients);
+        addMessage(conversationId, text, username, recipients, conversations);
       }
     );
     return () => socket.off("receive-message");
-  }, [socket, addMessage]);
+  }, [socket, addMessage, conversations]);
 
   return (
     <ConversationsContext.Provider
       value={{
         conversations,
+        conversationsNamesList,
         createConversation,
         selectedConversationIndex,
         setSelectedConversationIndex,

@@ -2,14 +2,11 @@ import React, { useState, useCallback } from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
 import "../styles/OpenConversationModalContent.css";
 
-export default function OpenConversation({
-  username,
-  selectedConversationIndex,
-  closeModal,
-}) {
+export default function OpenConversation({ username, closeModal }) {
   const [text, setText] = useState("");
   const { sendMessage } = useConversations();
   const { conversations } = useConversations();
+  const { selectedConversationIndex } = useConversations();
 
   const lastMessageRef = useCallback((node) => {
     if (node) {

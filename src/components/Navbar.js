@@ -8,7 +8,6 @@ export default function Navbar({ username }) {
   const [selected, setSelected] = useState("conversations");
 
   const handleClick = (event) => {
-    event.preventDefault();
     setSelected(event.target.name);
   };
 
@@ -34,6 +33,7 @@ export default function Navbar({ username }) {
             className="icon-image"
             src={`${process.env.PUBLIC_URL}/images/chat-icon-black.png`}
             alt="Chat icon"
+            name="conversations"
           />
         </button>
 
@@ -46,6 +46,7 @@ export default function Navbar({ username }) {
             className="icon-image"
             src={`${process.env.PUBLIC_URL}/images/contacts-icon-black.png`}
             alt="Contacts icon"
+            name="contacts"
           />
         </button>
       </nav>

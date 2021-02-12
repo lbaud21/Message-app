@@ -1,39 +1,36 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
 import Modal from "./Modal";
 import useModal from "../hooks/useModal";
 import OpenConversationModalContent from "./OpenConversationModalContent";
+import ConversationsList from "./ConversationsList";
 
 export default function Conversations({ username }) {
-  const { conversations } = useConversations();
+  //const conversationsNamesList = [1];
+  const { conversationsNamesList } = useConversations();
   const {
     selectedConversationIndex,
     setSelectedConversationIndex,
   } = useConversations();
+  //const selectedConversationIndex = 0;
   const [open, openModal, closeModal] = useModal();
 
-  const handleClick = (index) => {
-    setSelectedConversationIndex(index);
-    openModal();
-  };
+  const handleClick = useCallback(
+    (index) => {
+      setSelectedConversationIndex(index);
+      openModal();
+    },
+    [openModal, setSelectedConversationIndex]
+  );
 
   return (
     <div className="navbar-main-content">
-      <ul style={{ padding: 0 }}>
-        {conversations.map((conversation, index) => (
-          <li
-            className="conversations-list nav-main-content-list"
-            key={`conversation ${index}`}
-            onClick={() => handleClick(index)}
-          >
-            <p className="nav-main-content-list-text">
-              {conversation.recipients
-                .filter((recipient) => recipient !== username)
-                .join(", ")}
-            </p>
-          </li>
-        ))}
-      </ul>
+      <ConversationsList
+        username={username}
+        conversationsNamesList={conversationsNamesList}
+        handleClick={handleClick}
+      />
+
       {open ? (
         <Modal modalType="openConversation">
           <OpenConversationModalContent
