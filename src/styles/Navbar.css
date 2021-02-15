@@ -8,21 +8,43 @@
 }
 
 .nav-container .new-button {
-  height: 5em;
+  height: 10%;
   text-align: end;
 }
 
 .nav-container .navbar-main-content {
-  flex-grow: 1;
+  height: 80%;
   width: 100%;
   margin: 0;
   padding: 0;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .nav-container .navbar-main-content ul {
   margin: 0;
   padding: 0;
+}
+
+.nav-container .navbar-main-content li {
+  border: black solid;
+  border-top: none;
+}
+
+.nav-container .navbar-main-content li:first-child {
+  border-top: black solid;
+}
+
+.nav-container .navbar-main-content li:hover {
+  cursor: pointer;
+}
+
+.nav-container .navbar-main-content .nav-main-content-list-text {
+  margin: 1em 6em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-container .nav-buttons-container {
@@ -69,6 +91,7 @@
   margin: 0;
 }
 
+/*Scrollbar style*/
 /* Works on Firefox */
 * {
   scrollbar-width: thin;

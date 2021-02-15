@@ -14,15 +14,28 @@
   margin: 1em;
 }
 
+.conversation-container .return-button-container:focus {
+  outline: none;
+}
+
 .conversation-container .return-button {
   width: 100%;
+}
+
+.conversation-container .return-button:hover {
+  cursor: pointer;
 }
 
 .conversation-container .messages-container {
   flex-grow: 1;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column-reverse nowrap;
   overflow: auto;
+}
+
+.conversation-container .messages-subcontainer {
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .conversation-container .single-message-container {
@@ -48,4 +61,15 @@
 
 .conversation-container textarea {
   border: black solid 0.1em;
+  border-right: none;
+  padding: 1em;
+  resize: none;
+}
+
+.conversation-container textarea:focus {
+  outline: 0;
+}
+
+.conversation-container .send-message-button:hover {
+  cursor: pointer;
 }

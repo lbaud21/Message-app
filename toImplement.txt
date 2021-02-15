@@ -1,0 +1,6 @@
+*Check if contact already exists
+*show "typing..." on typing
+*fix connection
+
+*delete conversation
+*delete contact

@@ -14,16 +14,18 @@ export default function NewButton({ selected, username }) {
       </button>
 
       {open ? (
-        <Modal>
-          {selected === "conversations" ? (
+        selected === "conversations" ? (
+          <Modal modalType="newConversation">
             <NewConversationModalContent
               closeModal={closeModal}
               username={username}
             />
-          ) : (
+          </Modal>
+        ) : (
+          <Modal>
             <ContactsModalContent closeModal={closeModal} />
-          )}
-        </Modal>
+          </Modal>
+        )
       ) : null}
     </>
   );

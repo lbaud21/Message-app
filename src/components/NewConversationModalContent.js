@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useContacts } from "../contexts/ContactsProvider";
 import { useConversations } from "../contexts/ConversationsProvider";
+import "../styles/NewConversationModalContent.css";
 
 export default function NewConversationModalContent({ closeModal, username }) {
   const { contacts } = useContacts();
@@ -31,19 +32,19 @@ export default function NewConversationModalContent({ closeModal, username }) {
   };
 
   return (
-    <>
-      <h2>Create new conversation</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="new-conversation-modal-content">
+      <h2 className="new-conversation-contact-modal-title">
+        Create new conversation
+      </h2>
+      <form className="new-conversation-form" onSubmit={handleSubmit}>
         <ul>
           {contacts.map((contact) => (
             <li key={contact.username}>
-              <label>
-                {contact.username}
-                <input
-                  type="checkbox"
-                  onChange={(e) => handleChange(e, contact.username)}
-                />
-              </label>
+              <input
+                type="checkbox"
+                onChange={(e) => handleChange(e, contact.username)}
+              />
+              <label>{contact.username}</label>
             </li>
           ))}
         </ul>
@@ -51,6 +52,6 @@ export default function NewConversationModalContent({ closeModal, username }) {
         <hr />
         <button onClick={closeModal}>Close</button>
       </form>
-    </>
+    </div>
   );
 }

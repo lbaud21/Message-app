@@ -13,15 +13,11 @@ export default function ContactsModalContent({ closeModal }) {
 
   return (
     <>
-      <h2>Create contact</h2>
+      <h2 className="new-conversation-contact-modal-title">Create contact</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Username:
-          <input
-            type="text"
-            placeholder="Username of your new contact"
-            ref={usernameRef}
-          />
+          <input type="text" placeholder="New contact name" ref={usernameRef} />
         </label>
         <button type="submit">Add</button>
         <hr />

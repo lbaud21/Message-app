@@ -39,39 +39,47 @@ export default function OpenConversation({ username, closeModal }) {
       </button>
       {conversations[selectedConversationIndex] ? (
         <div className="messages-container">
-          {conversations[selectedConversationIndex].messages.map(
-            (message, index) => {
-              const lastMessage =
-                conversations[selectedConversationIndex].messages.length - 1 ===
-                index;
-              return (
-                <div
-                  key={`message-${index}`}
-                  ref={lastMessage ? lastMessageRef : null}
-                  className="single-message-container"
-                  style={
-                    message.sender === username
-                      ? { alignSelf: "flex-end", backgroundColor: "lightblue" }
-                      : {
-                          alignSelf: "flex-start",
-                          backgroundColor: "lightgreen",
-                        }
-                  }
-                >
-                  <div className="message-text">{message.text}</div>
-                  <div className="message-sender">
-                    {message.sender === username ? "you" : message.sender}
+          <div className="messages-subcontainer">
+            {conversations[selectedConversationIndex].messages.map(
+              (message, index) => {
+                const lastMessage =
+                  conversations[selectedConversationIndex].messages.length -
+                    1 ===
+                  index;
+                return (
+                  <div
+                    key={`message-${index}`}
+                    ref={lastMessage ? lastMessageRef : null}
+                    className="single-message-container"
+                    style={
+                      message.sender === username
+                        ? {
+                            alignSelf: "flex-end",
+                            backgroundColor: "lightblue",
+                          }
+                        : {
+                            alignSelf: "flex-start",
+                            backgroundColor: "lightgreen",
+                          }
+                    }
+                  >
+                    <div className="message-text">{message.text}</div>
+                    <div className="message-sender">
+                      {message.sender === username ? "you" : message.sender}
+                    </div>
                   </div>
-                </div>
-              );
-            }
-          )}
+                );
+              }
+            )}
+          </div>
         </div>
       ) : null}
 
       <form>
         <textarea value={text} onChange={handleChange}></textarea>
-        <button onClick={handleSubmit}>Send</button>
+        <button className="send-message-button" onClick={handleSubmit}>
+          Send
+        </button>
       </form>
     </div>
   );

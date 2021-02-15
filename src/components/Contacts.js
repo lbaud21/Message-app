@@ -7,7 +7,12 @@ export default function Contacts() {
   return (
     <div className="navbar-main-content">
       {contacts.map((contact) => (
-        <p key={contact.username}>{contact.username}</p>
+        <p
+          className="contact-name nav-main-content-list-text"
+          key={contact.username}
+        >
+          {contact.username}
+        </p>
       ))}
     </div>
   );
