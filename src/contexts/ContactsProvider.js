@@ -14,8 +14,16 @@ export function ContactsProvider({ children }) {
     setContacts((prevContacts) => [...prevContacts, { username }]);
   }
 
+  function deleteContact(username) {
+    setContacts((prevContacts) =>
+      prevContacts.filter((contact) => contact !== username)
+    );
+  }
+
   return (
-    <ContactsContext.Provider value={{ contacts, createContact }}>
+    <ContactsContext.Provider
+      value={{ contacts, createContact, deleteContact }}
+    >
       {children}
     </ContactsContext.Provider>
   );

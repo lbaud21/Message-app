@@ -6,13 +6,11 @@ import OpenConversationModalContent from "./OpenConversationModalContent";
 import ConversationsList from "./ConversationsList";
 
 export default function Conversations({ username }) {
-  //const conversationsNamesList = [1];
   const { conversationsNamesList } = useConversations();
   const {
     selectedConversationIndex,
     setSelectedConversationIndex,
   } = useConversations();
-  //const selectedConversationIndex = 0;
   const [open, openModal, closeModal] = useModal();
 
   const handleClick = useCallback(

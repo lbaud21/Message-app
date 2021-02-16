@@ -36,7 +36,7 @@
   border-top: black solid;
 }
 
-.nav-container .navbar-main-content li:hover {
+.nav-container .navbar-main-content .conversations-list:hover {
   cursor: pointer;
 }
 
@@ -106,6 +106,35 @@
 
 .nav-container .nav-main-content-list-text {
   margin: 0;
+}
+
+.nav-container .contact-name-list {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.nav-container .contact-name-list:hover {
+  cursor: default;
+}
+
+.nav-container .contact-name-list .delete-contact-button {
+  position: absolute;
+  right: 0;
+  width: 6%;
+  margin-right: 1em;
+}
+
+.nav-container .contact-name-list .delete-contact-icon {
+  width: 100%;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.nav-container .delete-contact-button:hover .delete-contact-icon {
+  visibility: visible;
 }
 
 /*Scrollbar style*/
