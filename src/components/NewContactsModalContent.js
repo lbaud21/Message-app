@@ -4,11 +4,20 @@ import { useContacts } from "../contexts/ContactsProvider";
 export default function NewContactsModalContent({ closeModal }) {
   const usernameRef = useRef();
   const { createContact } = useContacts();
+  const { contacts } = useContacts();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createContact(usernameRef.current.value);
-    closeModal();
+    if (
+      !contacts.some(
+        (contact) => contact.username === usernameRef.current.value
+      )
+    ) {
+      createContact(usernameRef.current.value);
+      closeModal();
+    } else {
+      alert(`${usernameRef.current.value} is already in your contacts`);
+    }
   };
 
   return (
