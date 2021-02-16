@@ -1,7 +1,7 @@
 import React from "react";
 import useModal from "../hooks/useModal";
 import Modal from "./Modal";
-import ContactsModalContent from "./ContactsModalContent";
+import NewContactsModalContent from "./NewContactsModalContent";
 import NewConversationModalContent from "./NewConversationModalContent";
 
 export default function NewButton({ selected, username }) {
@@ -23,7 +23,7 @@ export default function NewButton({ selected, username }) {
           </Modal>
         ) : (
           <Modal>
-            <ContactsModalContent closeModal={closeModal} />
+            <NewContactsModalContent closeModal={closeModal} />
           </Modal>
         )
       ) : null}

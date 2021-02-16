@@ -26,19 +26,18 @@ export default function NewConversationModalContent({ closeModal, username }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setSelectedContacts((prevState) => [...prevState, username]);
-    const conversationId = createConversationId(selectedContacts);
+    const conversationId = createConversationId([
+      ...selectedContacts,
+      username,
+    ]);
     if (
       !conversations.some(
         (conversation) => conversation.conversationId === conversationId
       )
     ) {
-      createConversation(selectedContacts);
+      createConversation([...selectedContacts, username]);
       closeModal();
     } else {
-      setSelectedContacts((prevState) =>
-        prevState.filter((name) => name !== username)
-      );
       alert("This conversation already exists");
     }
   };

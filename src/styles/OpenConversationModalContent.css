@@ -40,7 +40,7 @@
 
 .conversation-container .single-message-container {
   max-width: 80%;
-  padding: 0.5em;
+  padding: 0.25em 0.5em;
   margin: 0.5em;
   border-radius: 0.5em;
 }
@@ -51,6 +51,8 @@
 
 .conversation-container .message-text {
   word-wrap: break-word;
+  min-height: 1em;
+  margin-bottom: 0.25em;
 }
 
 .conversation-container form {
@@ -64,6 +66,7 @@
   border-right: none;
   padding: 1em;
   resize: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .conversation-container textarea:focus {

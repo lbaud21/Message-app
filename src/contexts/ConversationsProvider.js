@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useSocket } from "./SocketProvider";
+import { useContacts } from "./ContactsProvider";
 
 const ConversationsContext = React.createContext();
 
@@ -18,6 +19,7 @@ export function ConversationsProvider({ children }) {
   const [conversationsNamesList, setConversationsNamesList] = useState(() =>
     conversations.map((conversation) => conversation.recipients)
   );
+  const { contacts } = useContacts();
 
   useEffect(() => {
     setConversationsNamesList(
@@ -27,35 +29,30 @@ export function ConversationsProvider({ children }) {
 
   const socket = useSocket();
 
-  const createConversationId = useCallback((recipients, conversations) => {
+  const createConversationId = useCallback((recipients) => {
     let conversationId = recipients.sort().join("-");
-    let numberOfConversationsWithSameId = null;
 
-    if (conversations) {
-      numberOfConversationsWithSameId = conversations.filter(
-        (conversation) =>
-          conversation.recipients.sort().join("-") === conversationId
-      ).length;
-    }
-
-    if (numberOfConversationsWithSameId === 0) {
-      return conversationId;
-    } else {
-      conversationId += `-${numberOfConversationsWithSameId}`;
-      return conversationId;
-    }
+    return conversationId;
   }, []);
 
   const createConversation = useCallback(
-    (recipients, conversations) => {
+    (recipients) => {
       const conversationId = createConversationId(recipients, conversations);
       setConversations((prevConversations) => [
         ...prevConversations,
-        { conversationId, recipients, messages: [] },
+        { conversationId, recipients, messages: [], isTyping: [] },
       ]);
     },
-    [createConversationId, setConversations]
+    [createConversationId, setConversations, conversations]
   );
+
+  const deleteConversation = (conversationId) => {
+    setConversations((prevConversations) =>
+      prevConversations.filter(
+        (conversation) => conversation.conversationId !== conversationId
+      )
+    );
+  };
 
   const addMessage = useCallback(
     (conversationId, text, username, recipients, conversations) => {
@@ -66,7 +63,8 @@ export function ConversationsProvider({ children }) {
           (conversation) => conversation.conversationId === conversationId
         ) === false
       ) {
-        createConversation(recipients, conversations);
+        console.log("create enter");
+        createConversation(recipients);
       }
 
       setConversations((prevConversations) => {
@@ -95,16 +93,93 @@ export function ConversationsProvider({ children }) {
     [addMessage, socket, conversations]
   );
 
+  const typing = useCallback(
+    (index) => {
+      const conversation = conversations[index];
+      const recipients = conversation.recipients;
+      const conversationId = conversation.conversationId;
+      socket.emit("typing", { conversationId, recipients });
+    },
+    [conversations, socket]
+  );
+
+  const addTyping = useCallback(
+    (conversationId, username, conversations) => {
+      if (
+        conversations &&
+        conversations.some(
+          (conversation) => conversation.conversationId === conversationId
+        )
+      ) {
+        console.log("addTyping enter");
+        setConversations((prevConversations) => {
+          const newConversations = prevConversations.map((conversation) => {
+            if (conversationId === conversation.conversationId) {
+              return conversation.isTyping.includes(username)
+                ? { ...conversation }
+                : {
+                    ...conversation,
+                    isTyping: [...conversation.isTyping, username],
+                  };
+            } else return { ...conversation };
+          });
+          return newConversations;
+        });
+      }
+    },
+    [setConversations]
+  );
+
+  const removeTyping = useCallback(
+    (conversationId, username, conversations) => {
+      if (
+        conversations.some(
+          (conversation) => conversation.conversationId === conversationId
+        )
+      ) {
+        console.log("remove enter");
+        setConversations((prevConversations) => {
+          const newConversations = prevConversations.map((conversation) => {
+            return conversationId === conversation.conversationId
+              ? {
+                  ...conversation,
+                  isTyping: conversation.isTyping.filter(
+                    (name) => name !== username
+                  ),
+                }
+              : { ...conversation };
+          });
+          return newConversations;
+        });
+      }
+    },
+    [setConversations]
+  );
+
   useEffect(() => {
     if (socket === null) return;
+
     socket.on(
       "receive-message",
       ({ conversationId, text, username, recipients }) => {
-        addMessage(conversationId, text, username, recipients, conversations);
+        if (contacts.some((contact) => contact.username === username)) {
+          addMessage(conversationId, text, username, recipients, conversations);
+        }
       }
     );
+
+    /*socket.on("receive-is-typing", ({ conversationId, username }) => {
+      console.log("receive is typing");
+      addTyping(conversationId, username, conversations);
+    });
+
+    socket.on("receive-is-not-typing", ({ conversationId, username }) => {
+      console.log("receive is not typing");
+      removeTyping(conversationId, username, conversations);
+    });*/
+
     return () => socket.off("receive-message");
-  }, [socket, addMessage, conversations]);
+  }, [socket, addMessage, conversations, addTyping, removeTyping, contacts]);
 
   return (
     <ConversationsContext.Provider
@@ -112,9 +187,12 @@ export function ConversationsProvider({ children }) {
         conversations,
         conversationsNamesList,
         createConversation,
+        createConversationId,
+        deleteConversation,
         selectedConversationIndex,
         setSelectedConversationIndex,
         sendMessage,
+        typing,
       }}
     >
       {children}

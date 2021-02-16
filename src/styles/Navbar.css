@@ -29,6 +29,7 @@
 .nav-container .navbar-main-content li {
   border: black solid;
   border-top: none;
+  position: relative;
 }
 
 .nav-container .navbar-main-content li:first-child {
@@ -37,6 +38,22 @@
 
 .nav-container .navbar-main-content li:hover {
   cursor: pointer;
+}
+
+.nav-container .delete-conversation-button {
+  position: absolute;
+  right: 0;
+  width: 6%;
+  margin-right: 1em;
+}
+
+.nav-container .delete-conversation-icon {
+  width: 100%;
+  visibility: hidden;
+}
+
+.nav-container .delete-conversation-button:hover .delete-conversation-icon {
+  visibility: visible;
 }
 
 .nav-container .navbar-main-content .nav-main-content-list-text {

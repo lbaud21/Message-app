@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useContacts } from "../contexts/ContactsProvider";
 
-export default function ContactsModalContent({ closeModal }) {
+export default function NewContactsModalContent({ closeModal }) {
   const usernameRef = useRef();
   const { createContact } = useContacts();
 

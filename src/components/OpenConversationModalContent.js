@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
 import "../styles/OpenConversationModalContent.css";
 
@@ -7,6 +7,7 @@ export default function OpenConversation({ username, closeModal }) {
   const { sendMessage } = useConversations();
   const { conversations } = useConversations();
   const { selectedConversationIndex } = useConversations();
+  const { typing } = useConversations();
 
   const lastMessageRef = useCallback((node) => {
     if (node) {
@@ -22,6 +23,7 @@ export default function OpenConversation({ username, closeModal }) {
 
   const handleChange = (e) => {
     setText(e.target.value);
+    //typing(selectedConversationIndex);
   };
 
   return (
@@ -37,7 +39,7 @@ export default function OpenConversation({ username, closeModal }) {
           alt="return icon"
         />
       </button>
-      {conversations[selectedConversationIndex] ? (
+      {conversations[selectedConversationIndex].messages ? (
         <div className="messages-container">
           <div className="messages-subcontainer">
             {conversations[selectedConversationIndex].messages.map(
@@ -71,6 +73,20 @@ export default function OpenConversation({ username, closeModal }) {
                 );
               }
             )}
+
+            {conversations[selectedConversationIndex].isTyping.length > 0 ? (
+              <div className="single-message-container">
+                <div className="message-text">
+                  {conversations[selectedConversationIndex].isTyping.length > 1
+                    ? `${conversations[selectedConversationIndex].isTyping.join(
+                        " "
+                      )} are typing`
+                    : `${conversations[selectedConversationIndex].isTyping.join(
+                        " "
+                      )} is typing`}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}
