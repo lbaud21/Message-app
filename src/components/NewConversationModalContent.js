@@ -7,6 +7,8 @@ export default function NewConversationModalContent({ closeModal, username }) {
   const { contacts } = useContacts();
   const [selectedContacts, setSelectedContacts] = useState([]);
   const { createConversation } = useConversations();
+  const { createConversationId } = useConversations();
+  const { conversations } = useConversations();
 
   const handleChange = (e, username) => {
     e.target.checked
@@ -23,12 +25,22 @@ export default function NewConversationModalContent({ closeModal, username }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (selectedContacts) {
-      selectedContacts.push(username);
-      createConversation(selectedContacts);
-    }
 
-    closeModal();
+    setSelectedContacts((prevState) => [...prevState, username]);
+    const conversationId = createConversationId(selectedContacts);
+    if (
+      !conversations.some(
+        (conversation) => conversation.conversationId === conversationId
+      )
+    ) {
+      createConversation(selectedContacts);
+      closeModal();
+    } else {
+      setSelectedContacts((prevState) =>
+        prevState.filter((name) => name !== username)
+      );
+      alert("This conversation already exists");
+    }
   };
 
   return (
@@ -48,7 +60,9 @@ export default function NewConversationModalContent({ closeModal, username }) {
             </li>
           ))}
         </ul>
-        <button type="submit">Create</button>
+        <button disabled={selectedContacts.length < 1} type="submit">
+          Create
+        </button>
         <hr />
         <button onClick={closeModal}>Close</button>
       </form>
