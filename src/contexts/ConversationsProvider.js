@@ -104,7 +104,7 @@ export function ConversationsProvider({ children }) {
   );
 
   const addTyping = useCallback(
-    (conversationId, username, conversations) => {
+    async (conversationId, username) => {
       if (
         conversations &&
         conversations.some(
@@ -112,7 +112,7 @@ export function ConversationsProvider({ children }) {
         )
       ) {
         console.log("addTyping enter");
-        setConversations((prevConversations) => {
+        await setConversations((prevConversations) => {
           const newConversations = prevConversations.map((conversation) => {
             if (conversationId === conversation.conversationId) {
               return conversation.isTyping.includes(username)
@@ -127,18 +127,18 @@ export function ConversationsProvider({ children }) {
         });
       }
     },
-    [setConversations]
+    [setConversations, conversations]
   );
 
   const removeTyping = useCallback(
-    (conversationId, username, conversations) => {
+    async (conversationId, username) => {
       if (
         conversations.some(
           (conversation) => conversation.conversationId === conversationId
         )
       ) {
-        console.log("remove enter");
-        setConversations((prevConversations) => {
+        console.log("removeTyping enter");
+        await setConversations((prevConversations) => {
           const newConversations = prevConversations.map((conversation) => {
             return conversationId === conversation.conversationId
               ? {
@@ -153,7 +153,7 @@ export function ConversationsProvider({ children }) {
         });
       }
     },
-    [setConversations]
+    [setConversations, conversations]
   );
 
   useEffect(() => {
@@ -168,18 +168,30 @@ export function ConversationsProvider({ children }) {
       }
     );
 
-    /*socket.on("receive-is-typing", ({ conversationId, username }) => {
+    return () => socket.off("receive-message");
+  }, [socket, addMessage, conversations, contacts]);
+
+  useEffect(() => {
+    if (socket === null) return;
+
+    socket.on("receive-is-typing", ({ conversationId, username }) => {
       console.log("receive is typing");
-      addTyping(conversationId, username, conversations);
+      addTyping(conversationId, username);
     });
+
+    return () => socket.off("receive-is-typing");
+  }, [socket, addTyping]);
+
+  useEffect(() => {
+    if (socket === null) return;
 
     socket.on("receive-is-not-typing", ({ conversationId, username }) => {
       console.log("receive is not typing");
-      removeTyping(conversationId, username, conversations);
-    });*/
+      removeTyping(conversationId, username);
+    });
 
-    return () => socket.off("receive-message");
-  }, [socket, addMessage, conversations, addTyping, removeTyping, contacts]);
+    return () => socket.off("receive-is-not-typing");
+  }, [socket, removeTyping]);
 
   return (
     <ConversationsContext.Provider

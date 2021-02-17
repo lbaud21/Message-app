@@ -23,7 +23,7 @@ export default function OpenConversation({ username, closeModal }) {
 
   const handleChange = (e) => {
     setText(e.target.value);
-    //typing(selectedConversationIndex);
+    typing(selectedConversationIndex);
   };
 
   return (
