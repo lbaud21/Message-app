@@ -1,5 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useConversations } from "../contexts/ConversationsProvider";
+import TypingNotification from "./TypingNotification";
 import "../styles/OpenConversationModalContent.css";
 
 export default function OpenConversation({ username, closeModal }) {
@@ -73,20 +74,10 @@ export default function OpenConversation({ username, closeModal }) {
                 );
               }
             )}
-
-            {conversations[selectedConversationIndex].isTyping.length > 0 ? (
-              <div className="single-message-container">
-                <div className="message-text">
-                  {conversations[selectedConversationIndex].isTyping.length > 1
-                    ? `${conversations[selectedConversationIndex].isTyping.join(
-                        " "
-                      )} are typing`
-                    : `${conversations[selectedConversationIndex].isTyping.join(
-                        " "
-                      )} is typing`}
-                </div>
-              </div>
-            ) : null}
+            <TypingNotification
+              conversations={conversations}
+              selectedConversationIndex={selectedConversationIndex}
+            />
           </div>
         </div>
       ) : null}

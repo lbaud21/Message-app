@@ -104,7 +104,7 @@ export function ConversationsProvider({ children }) {
   );
 
   const addTyping = useCallback(
-    async (conversationId, username) => {
+    (conversationId, username) => {
       if (
         conversations &&
         conversations.some(
@@ -112,7 +112,7 @@ export function ConversationsProvider({ children }) {
         )
       ) {
         console.log("addTyping enter");
-        await setConversations((prevConversations) => {
+        setConversations((prevConversations) => {
           const newConversations = prevConversations.map((conversation) => {
             if (conversationId === conversation.conversationId) {
               return conversation.isTyping.includes(username)
@@ -131,14 +131,14 @@ export function ConversationsProvider({ children }) {
   );
 
   const removeTyping = useCallback(
-    async (conversationId, username) => {
+    (conversationId, username) => {
       if (
         conversations.some(
           (conversation) => conversation.conversationId === conversationId
         )
       ) {
         console.log("removeTyping enter");
-        await setConversations((prevConversations) => {
+        setConversations((prevConversations) => {
           const newConversations = prevConversations.map((conversation) => {
             return conversationId === conversation.conversationId
               ? {

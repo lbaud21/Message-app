@@ -77,3 +77,39 @@
 .conversation-container .send-message-button:hover {
   cursor: pointer;
 }
+
+.conversation-container .typing-notification-text {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.suspension-point {
+  height: 100%;
+  padding-bottom: 0.55em;
+  font-size: 2em;
+  display: block;
+  text-align: center;
+}
+
+.first-suspension-point {
+  animation: 500ms ease-in-out 0s infinite alternate jumpingPoint;
+  margin-left: 0.15em;
+}
+
+.second-suspension-point {
+  animation: 500ms ease-in-out 200ms infinite alternate jumpingPoint;
+}
+
+.third-suspension-point {
+  animation: 500ms ease-in-out 300ms infinite alternate jumpingPoint;
+}
+
+@keyframes jumpingPoint {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(0.15em);
+  }
+}
