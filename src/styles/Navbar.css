@@ -92,6 +92,7 @@
 
 .nav-container .nav-buttons-container .icon-image {
   height: 60%;
+  width: auto;
   background-color: transparent;
 }
 
