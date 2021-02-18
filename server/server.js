@@ -29,12 +29,9 @@ io.on("connection", (socket) => {
       (recipient) => recipient !== username
     );
 
-    let isTyping = true;
-
     if (timeout) {
       clearTimeout(timeout);
     }
-    console.log(isTyping);
 
     newRecipients.forEach((recipient) => {
       socket.broadcast.to(recipient).emit("receive-is-typing", {
@@ -44,14 +41,12 @@ io.on("connection", (socket) => {
     });
 
     timeout = setTimeout(() => {
-      isTyping = false;
       newRecipients.forEach((recipient) => {
         socket.broadcast.to(recipient).emit("receive-is-not-typing", {
           conversationId,
           username,
         });
       });
-      console.log(isTyping);
     }, 3000);
   });
 });
