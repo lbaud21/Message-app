@@ -1,3 +1,0 @@
-*show "typing..." on typing
-*fix connection
-

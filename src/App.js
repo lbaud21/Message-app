@@ -8,13 +8,7 @@ import { ConversationsProvider } from "./contexts/ConversationsProvider";
 import { SocketProvider } from "./contexts/SocketProvider";
 
 function App() {
-  const [rememberMe, setRememberMe] = useState(() => {
-    const storedValue = JSON.parse(
-      localStorage.getItem("message-app-username")
-    );
-    return storedValue ? true : false;
-  });
-  const [username, setUsername] = useLocalStorage("username", "", rememberMe);
+  const [username, setUsername] = useLocalStorage("username", "", true);
   const [sendForm, setSendForm] = useState(false);
 
   const dashboard = (
@@ -35,8 +29,6 @@ function App() {
         <Login
           changeUsername={setUsername}
           username={username}
-          changeRememberMe={setRememberMe}
-          rememberMe={rememberMe}
           changeSentForm={setSendForm}
         />
       )}

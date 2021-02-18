@@ -1,13 +1,6 @@
 import React from "react";
-import SignIn from "./SignIn";
 
-export default function Login({
-  changeUsername,
-  username,
-  changeRememberMe,
-  rememberMe,
-  changeSentForm,
-}) {
+export default function Login({ changeUsername, username, changeSentForm }) {
   return (
     <div
       className="login-wrapper"
@@ -28,7 +21,7 @@ export default function Login({
         <label>
           Username
           <input
-            style={{ display: "block" }}
+            style={{ display: "block", margin: "1em 0" }}
             type="text"
             name="username"
             placeholder="Enter your username"
@@ -36,19 +29,9 @@ export default function Login({
             onChange={(e) => changeUsername(e.target.value)}
           />
         </label>
-        <label>
-          <input
-            type="checkbox"
-            name="rememberMe"
-            checked={rememberMe}
-            onChange={(e) => changeRememberMe(e.target.checked)}
-          />
-          Remember me
-        </label>
         <button type="submit" value="Login" style={{ display: "block" }}>
           Login
         </button>
-        <SignIn />
       </form>
     </div>
   );
