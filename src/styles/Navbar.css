@@ -9,7 +9,10 @@
 
 .nav-container .new-button {
   height: 10%;
-  text-align: end;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-container .navbar-main-content {

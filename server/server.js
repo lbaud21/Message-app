@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 //deployement
 app.use(express.static(__dirname + "/../build"));
 //
-console.log(__dirname);
+
 let timeout = undefined;
 
 io.on("connection", (socket) => {
