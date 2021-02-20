@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# [Message App](https://message-app-lbaud21.herokuapp.com/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Message app built with React and Socket.io.
 
-## Available Scripts
+### Login
 
-In the project directory, you can run:
+Enter a username and click on "Login"
+![login](/public/images/screens/log-in.PNG)
+You will then see the homepage
+![home page](/public/images/screens/main-page.PNG)
 
-### `npm start`
+### Contacts page
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Click on the contact logo to display the contacts page
+![Contacts logo](/public/images/screens/contact-logo.PNG)
+Add a new contact by clicking on the "New contact" button
+![New contact logo](/public/images/screens/new-contact-button.PNG)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Conversation page
 
-### `npm test`
+Click on the conversations logo to display the conversations page
+![Conversations logo](/public/chat-logo.PNG)
+To create a conversation, click on the "New conversation" button (Before that, you have to add at least one contact)
+![New conversation logo](/public/new-conversation-button.PNG)
+After clicking it, a modal appears. Select the contact(s) you wish to start a conversation with then click on "create"
+![New conversation modal](/public/new-conversation-modal.PNG)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Start a chat!
 
-### `npm run build`
+![conversation](/public/conversation.PNG)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can also try it alone by opening a new private window and creating another account.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Technologies used:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [React](https://fr.reactjs.org/)
+- [nodeJS](https://nodejs.org/en/)
+- [ExpressJS](https://expressjs.com/)
+- [Socket.io](https://socket.io/)
