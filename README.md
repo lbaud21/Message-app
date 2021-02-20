@@ -26,23 +26,31 @@ Add a new contact by clicking on the "New contact" button
 
 Click on the conversations logo to display the conversations page
 
-![Conversations logo](/public/images/chat-logo.PNG)
+![Conversations logo](/public/images/screens/chat-logo.PNG)
 
 To create a conversation, click on the "New conversation" button (Before that, you have to add at least one contact)
 
-![New conversation logo](/public/images/new-conversation-button.PNG)
+![New conversation logo](/public/images/screens/new-conversation-button.PNG)
 
 After clicking it, a modal appears. Select the contact(s) you wish to start a conversation with then click on "create"
 
-![New conversation modal](/public/images/new-conversation-modal.PNG)
+![New conversation modal](/public/images/screens/new-conversation-modal.PNG)
 
 ### Start a chat!
 
-![conversation](/public/images/conversation.PNG)
+![conversation](/public/images/screens/conversation.PNG)
 
 You can also try it alone by opening a new private window and creating another account.
 
-Technologies used:
+### More info
+
+This web app is not connected to a databse, all the user infos are saved on the local storage.
+Therefore, no user checking is performed when you connect to the app.
+To disconnect, click on the "Disconnection" button (it will bring you back to the login page and delete all the local storage data of your session)
+
+![conversation](/public/images/screens/disconnection.PNG)
+
+### Technologies used:
 
 - [React](https://fr.reactjs.org/)
 - [nodeJS](https://nodejs.org/en/)
